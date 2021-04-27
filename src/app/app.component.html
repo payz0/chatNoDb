@@ -1,0 +1,65 @@
+
+<div class="container">
+  <h3>Chat app</h3>
+  <!-- <app-peta></app-peta> -->
+  <div class="login" *ngIf="!chat">
+      <!-- <input type="file" (change)="uploadFoto($event)" style="display: block"> -->
+    <input type="text" [(ngModel)]="pesan.user" (keyup.enter)="chat = true">
+    <button (click)="chat = true">Login</button>
+    <div>
+        <img [src]="gambar" alt="">
+      <!-- <button (click)="compressFile()">Upload and compress Image</button>
+      <img *ngIf="imgResultBeforeCompress" [src]="imgResultAfterCompress" alt="">
+      <img *ngIf="imgResultAfterCompress" [src]="imgResultAfterCompress" alt=""> -->
+    </div>
+  </div>
+  <div class="body" *ngIf="chat">
+    <div class="content" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+              <div *ngFor="let data of message" [ngClass]="data.user == pesan.user ? 'owner':''">
+                  
+                  <div  class="user">
+                    <span style="float: right">&times;</span>
+                    <span *ngIf="data.user != pesan.user"  [ngClass]="data.user != pesan.user ? 'guest':'titleOwner'">{{data.user}}</span>
+                    <span *ngIf="data.user == pesan.user" [ngClass]="data.user == pesan.user ? 'titleOwner':'guest'"> <i>Anda</i> </span>
+                    {{data.isi}}
+                    <img *ngIf="data.img != undefined && data.type == 'image'" src="{{data.img}}" alt="">
+                    <video *ngIf="data.img != undefined && data.type == 'video'"  controls width="420" height="300">
+                        <source type="video/mp4"  id="jh" src="{{data.img}}" > 
+                        <source type="video/ogg"  id="jh" src="{{data.img}}" > 
+                        <source type="video/webm"  id="jh" src="{{data.img}}" > 
+                    </video>
+                  </div>
+                
+               </div>
+               <img *ngIf="pesan.img && pesan.type == 'image'" src="{{pesan.img}}" class="imgTemp">
+               <!-- <video *ngIf="pesan.img && pesan.type == 'video'"  controls width="220" height="100" class="imgTemp">
+                  <source type="video/mp4"  id="jh" src="{{pesan.img}}" > 
+                  <source type="video/ogg"  id="jh" src="{{pesan.img}}" > 
+                  <source type="video/webm"  id="jh" src="{{pesan.img}}" > 
+              </video> -->
+               
+    </div>
+    <div class="pesan">
+      <input type="text" (keyup.enter)="kirim()" [(ngModel)]="pesan.isi">
+      <button (click)="kirim()">Kirim</button>
+      <input type="file" name="image" id="gambar" (change)="upload($event)">
+      <label for="gambar">Image</label>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="loading">
+  <div class="row">
+    <div id="loader">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="loading"></div>
+    </div>
+  </div>
+</div>
